@@ -7,6 +7,7 @@ const EachPost = () => {
         <h3>記事のタイトルあああああああああおおおお</h3>
         <p>aaaaa</p>
         <p>bbbb</p>
+        <p>ssdsds</p>
       </a>
     </article>
   );
