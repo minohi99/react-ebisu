@@ -1,19 +1,19 @@
-import styles from "@/styles/social.module.css";
+import styles from '@/styles/social.module.css';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faTwitter,
   faFacebookF,
   faGithub,
-} from "@fortawesome/free-brands-svg-icons";
+} from '@fortawesome/free-brands-svg-icons';
 
 type SociaTypes = {
   iconSize: string;
 };
 
-const Social = ({ iconSize = "initial" }: SociaTypes) => {
+const Social = ({ iconSize = 'initial' }: SociaTypes) => {
   return (
-    <ul className={styles.list} style={{ "--icon-size": iconSize }}>
+    <ul className={styles.list} style={{ '--icon-size': iconSize }}>
       <li>
         <a href="https://twitter.com/">
           <FontAwesomeIcon icon={faTwitter} />

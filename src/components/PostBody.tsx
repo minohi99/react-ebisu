@@ -1,4 +1,4 @@
-import styles from "@/styles/postbody.module.css";
+import styles from "@/styles/post-body.module.css";
 import React from "react";
 
 type PostBodyProps = {
