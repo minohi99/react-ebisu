@@ -1,40 +1,32 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import '@/styles/globals.css';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
 import React, { ReactNode } from 'react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import Head from 'next/head';
+import { siteMeta } from '@/lib/constants';
+import Layout from '@/components/Layout';
 config.autoAddCss = false;
 
-const siteMeta = {
-  siteTitle: 'CUBE',
-  siteDesc: 'アウトプットしていくサイト',
-  siteURL: 'http://localhost:3000/',
-  siteLang: 'ja',
-  siteLocale: 'ja-JP',
-  siteType: 'website',
-  siteIcon: '/favicon.png',
-};
+const { siteTitle, siteDesc, siteUrl, siteLang, siteLocale, siteType } =
+  siteMeta;
 
 export const metadata = {
   title: {
-    default: siteMeta.siteTitle,
-    template: `%s | ${siteMeta.siteTitle}`,
+    default: siteTitle,
+    template: `%s | ${siteTitle}`,
   },
-  description: siteMeta.siteDesc,
-  metadataBase: new URL(siteMeta.siteURL),
+  description: siteDesc,
+  metadataBase: new URL(siteUrl),
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: siteMeta.siteTitle,
-    description: siteMeta.siteDesc,
-    url: siteMeta.siteURL,
-    siteName: siteMeta.siteTitle,
-    locale: siteMeta.siteLocale,
-    type: siteMeta.siteType,
+    title: siteTitle,
+    description: siteDesc,
+    url: siteUrl,
+    siteName: siteTitle,
+    locale: siteLocale,
+    type: siteType,
   },
 };
 
@@ -44,17 +36,17 @@ type RootLayoutProps = {
 
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
-    <>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-      <Header />
-      <main>{children}</main>
-      <Footer />
-    </>
+    <React.Fragment>
+      <html lang={siteLang}>
+        <body>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+            rel="stylesheet"
+          />
+          <Layout>{children}</Layout>
+        </body>
+      </html>
+    </React.Fragment>
   );
 };
 
