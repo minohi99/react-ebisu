@@ -1,9 +1,12 @@
-import { client } from "libs/api";
+import Container from '@/components/Container';
+import { getPostBySlug } from '@/lib/api';
 
 export default async function Schedule() {
-  const resPromise = client.get({
-    endpoint: "categories",
-  });
-  resPromise.then((res) => console.log(res)).catch((err) => console.log(err));
-  // console.log(resPromise);
+  const { title } = await getPostBySlug('schedule');
+  return (
+    <Container>
+      <h1>{title}</h1>
+      {/* 追加のコンテンツ表示 */}
+    </Container>
+  );
 }
