@@ -8,11 +8,11 @@ import TwoColumn, {
 import { getPostBySlug } from '@/lib/api';
 import Image from 'next/image';
 import ConvertBody from '@/components/ConvertBody';
+import PostCategories from '@/components/PostCategories';
 
 export default async function Schedule() {
-  const { title, publishDate, eyecatch, content } =
+  const { title, publishDate, eyecatch, content, categories } =
     await getPostBySlug('schedule');
-  console.log('🚀 ~ Schedule ~ eyecatch:', eyecatch);
 
   return (
     <Container>
@@ -40,7 +40,9 @@ export default async function Schedule() {
               {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
             </PostBody>
           </TwoColumnMain>
-          <TwoColumnSidebar> </TwoColumnSidebar>
+          <TwoColumnSidebar>
+            <PostCategories categories={categories} />
+          </TwoColumnSidebar>
         </TwoColumn>
       </article>
     </Container>

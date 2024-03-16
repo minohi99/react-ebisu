@@ -9,8 +9,6 @@ type ConvertBodyProps = {
 const ConvertBody = ({ contentHTML }: ConvertBodyProps) => {
   const contentReact = parse(contentHTML, {
     replace: (node: DOMElement) => {
-      console.log('🚀 ~ ConvertBody ~ node:', node);
-
       if (node.name === 'img') {
         const { src, alt, width, height } = node.attribs;
         return (
