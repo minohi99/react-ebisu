@@ -8,16 +8,17 @@ type ConvertBodyProps = {
 
 const ConvertBody = ({ contentHTML }: ConvertBodyProps) => {
   const contentReact = parse(contentHTML, {
-    replace: (node) => {
+    replace: (node: DOMElement) => {
+      console.log('🚀 ~ ConvertBody ~ node:', node);
+
       if (node.name === 'img') {
         const { src, alt, width, height } = node.attribs;
         return (
           <Image
-            layout="responsive"
             src={src}
+            alt={alt}
             width={width}
             height={height}
-            alt={alt}
             sizes="(min-width:768px) 768px, 100vw"
           />
         );
