@@ -9,42 +9,70 @@ import { getPostBySlug } from '@/lib/api';
 import Image from 'next/image';
 import ConvertBody from '@/components/ConvertBody';
 import PostCategories from '@/components/PostCategories';
+import extractText from '@/lib/extract-text';
+import React from 'react';
+import { useRouter } from 'next/router';
+import { siteMeta } from '@/lib/constants';
+
+// const router = useRouter();
+// const currentUrl = `${siteMeta.siteUrl}${router.asPath}`;
+
+export const generateMetadata = async () => {
+  const post = await getPostBySlug('schedule');
+  const description = extractText(post.content);
+
+  return {
+    title: post.title,
+    description: description,
+    alternates: {
+      canonical: post.siteUrl,
+    },
+    openGraph: {
+      title: post.title,
+      description: description,
+      // url: siteUrl,
+      type: 'article',
+    },
+  };
+};
 
 export default async function Schedule() {
   const { title, publishDate, eyecatch, content, categories } =
     await getPostBySlug('schedule');
 
   return (
-    <Container>
-      <article>
-        <PostHeader
-          title={title}
-          subtitle="Blog Article"
-          publishDate={publishDate}
-        />
+    <React.Fragment>
+      <Container>
+        <article>
+          <PostHeader
+            title={title}
+            subtitle="Blog Article"
+            publishDate={publishDate}
+          />
 
-        <Image
-          src={eyecatch.url}
-          alt=""
-          width={eyecatch.width}
-          height={eyecatch.height}
-          sizes="(min-width:1152px) 1152px, 100vw"
-          priority
-        />
+          <Image
+            src={eyecatch.url}
+            alt=""
+            width={eyecatch.width}
+            height={eyecatch.height}
+            sizes="(min-width:1152px) 1152px, 100vw"
+            priority
+          />
 
-        <TwoColumn>
-          <TwoColumnMain>
-            {/* <PostBody>{content}</PostBody> */}
-            <PostBody>
-              <ConvertBody contentHTML={content} />
-              {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
-            </PostBody>
-          </TwoColumnMain>
-          <TwoColumnSidebar>
-            <PostCategories categories={categories} />
-          </TwoColumnSidebar>
-        </TwoColumn>
-      </article>
-    </Container>
+          <TwoColumn>
+            <TwoColumnMain>
+              {/* <PostBody>{content}</PostBody> */}
+              <PostBody>
+                <ConvertBody contentHTML={content} />
+                {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
+              </PostBody>
+            </TwoColumnMain>
+            <TwoColumnSidebar>
+              <PostCategories categories={categories} />
+            </TwoColumnSidebar>
+          </TwoColumn>
+        </article>
+      </Container>
+    </React.Fragment>
   );
 }
