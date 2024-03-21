@@ -17,6 +17,7 @@ const PostHeader = ({ title, subtitle, publishDate = '' }: PostHeader) => {
       {publishDate && (
         <div className={styles.publishDate}>
           <FontAwesomeIcon icon={faClock} size="lg" color="var(--gray-25)" />
+
           <ConvertDate publishDate={publishDate} />
         </div>
       )}

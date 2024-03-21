@@ -56,10 +56,8 @@ export default async function Schedule() {
 
           <TwoColumn>
             <TwoColumnMain>
-              {/* <PostBody>{content}</PostBody> */}
               <PostBody>
                 <ConvertBody contentHTML={content} />
-                {/* <div dangerouslySetInnerHTML={{ __html: content }}></div> */}
               </PostBody>
             </TwoColumnMain>
             <TwoColumnSidebar>

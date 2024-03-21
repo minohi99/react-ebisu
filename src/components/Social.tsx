@@ -8,12 +8,12 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 
 type SociaTypes = {
-  iconSize: string;
+  iconSize?: string;
 };
 
 const Social = ({ iconSize = 'initial' }: SociaTypes) => {
   return (
-    <ul className={styles.list} style={{ '--icon-size': iconSize }}>
+    <ul className={styles.list} style={{ fontSize: iconSize }}>
       <li>
         <a href="https://twitter.com/">
           <FontAwesomeIcon icon={faTwitter} />
