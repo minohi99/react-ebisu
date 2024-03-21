@@ -5,11 +5,11 @@ import TwoColumn, {
   TwoColumnMain,
   TwoColumnSidebar,
 } from '@/components/TwoColumn';
-import { getPostBySlug } from '@/lib/api';
+import { getPostBySlug } from '@/libs/api';
 import Image from 'next/image';
 import ConvertBody from '@/components/ConvertBody';
 import PostCategories from '@/components/PostCategories';
-import extractText from '@/lib/extract-text';
+import extractText from '@/libs/extract-text';
 import React from 'react';
 
 export const generateMetadata = async () => {

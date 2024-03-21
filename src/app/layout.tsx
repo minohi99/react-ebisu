@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 import React, { ReactNode } from 'react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import { siteMeta } from '@/lib/constants';
+import { siteMeta } from '@/libs/constants';
 import Layout from '@/components/Layout';
 config.autoAddCss = false;
 
