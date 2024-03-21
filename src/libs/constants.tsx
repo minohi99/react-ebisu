@@ -6,3 +6,9 @@ export const siteMeta = {
   siteLocale: 'ja_JP',
   siteType: 'website',
 };
+
+export const eyecatchLocal = {
+  url: '/eyecatch.jpg',
+  width: 1920,
+  height: 1280,
+};

@@ -11,6 +11,7 @@ import ConvertBody from '@/components/ConvertBody';
 import PostCategories from '@/components/PostCategories';
 import extractText from '@/libs/extract-text';
 import React from 'react';
+import { eyecatchLocal } from '@/libs/constants';
 
 export const generateMetadata = async () => {
   const post = await getPostBySlug('schedule');
@@ -33,7 +34,9 @@ export const generateMetadata = async () => {
 
 export default async function Schedule() {
   const { title, publishDate, eyecatch, content, categories } =
-    await getPostBySlug('schedule');
+    await getPostBySlug('micro');
+
+  const currentEyecatch = eyecatch ?? eyecatchLocal;
 
   return (
     <React.Fragment>
@@ -46,10 +49,10 @@ export default async function Schedule() {
           />
 
           <Image
-            src={eyecatch.url}
+            src={currentEyecatch.url}
             alt=""
-            width={eyecatch.width}
-            height={eyecatch.height}
+            width={currentEyecatch.width}
+            height={currentEyecatch.height}
             sizes="(min-width:1152px) 1152px, 100vw"
             priority
           />
