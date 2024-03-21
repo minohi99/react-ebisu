@@ -11,11 +11,6 @@ import ConvertBody from '@/components/ConvertBody';
 import PostCategories from '@/components/PostCategories';
 import extractText from '@/lib/extract-text';
 import React from 'react';
-import { useRouter } from 'next/router';
-import { siteMeta } from '@/lib/constants';
-
-// const router = useRouter();
-// const currentUrl = `${siteMeta.siteUrl}${router.asPath}`;
 
 export const generateMetadata = async () => {
   const post = await getPostBySlug('schedule');
@@ -30,7 +25,7 @@ export const generateMetadata = async () => {
     openGraph: {
       title: post.title,
       description: description,
-      // url: siteUrl,
+      url: post.siteUrl,
       type: 'article',
     },
   };
