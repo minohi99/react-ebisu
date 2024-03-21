@@ -14,9 +14,6 @@ export async function getPostBySlug(slug: string) {
       endpoint: 'blogs',
       queries: { filters: `slug[equals]${slug}` },
     });
-    console.log(post);
     return post.contents[0];
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 }
