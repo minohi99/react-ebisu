@@ -17,3 +17,22 @@ export async function getPostBySlug(slug: string) {
     return post.contents[0];
   } catch (err) {}
 }
+
+interface SlugObject {
+  slug: string;
+}
+
+export async function getAllSlugs(limit = 100): Promise<SlugObject[]> {
+  try {
+    const slugs = await client.get({
+      endpoint: 'blogs',
+      queries: { fields: 'title,slug', orders: '-publishDate', limit: limit },
+    });
+    // console.log(slugs.contents);
+    return slugs.contents;
+  } catch (err) {
+    console.log('~~ getAllSlugs ~~');
+    console.log(err);
+    return [];
+  }
+}
