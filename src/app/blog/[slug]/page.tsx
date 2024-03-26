@@ -66,7 +66,7 @@ export default async function Post(context: GetStaticPropsContext) {
     allSlugs,
     currentSlug: slug,
   });
-
+  console.log('🚀 ~ Post ~ prevPost:', prevPost);
   return (
     <React.Fragment>
       <Container>
