@@ -16,6 +16,7 @@ import { getPlaiceholder } from 'plaiceholder';
 import { getImageBuffer } from '@/libs/getImageBuffer';
 import { GetStaticPropsContext } from 'next';
 import prevNextPost from '@/libs/prev-next-post';
+import Pagenation from '@/components/Pagenation';
 
 export const generateMetadata = async () => {
   const post = await getPostBySlug('schedule');
@@ -61,13 +62,10 @@ export default async function Post(context: GetStaticPropsContext) {
   const blurDataURL = base64;
 
   const allSlugs = await getAllSlugs();
-  console.log('🚀 ~ Post ~ allSlugs:', allSlugs);
   const [prevPost, nextPost] = prevNextPost({
     allSlugs,
     currentSlug: slug,
   });
-  console.log(prevPost);
-  console.log(nextPost);
 
   return (
     <React.Fragment>
@@ -100,12 +98,12 @@ export default async function Post(context: GetStaticPropsContext) {
               <PostCategories categories={categories} />
             </TwoColumnSidebar>
           </TwoColumn>
-          <div>
-            {prevPost.title} {prevPost.slug}
-          </div>
-          <div>
-            {nextPost.title} {nextPost.slug}
-          </div>
+          <Pagenation
+            prevText={prevPost.title}
+            prevUrl={`/blog/${prevPost.slug}`}
+            nextText={nextPost.title}
+            nextUrl={`/blog/${nextPost.slug}`}
+          />
         </article>
       </Container>
     </React.Fragment>
