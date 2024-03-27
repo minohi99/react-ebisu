@@ -1,7 +1,4 @@
-interface SlugObject {
-  title: string;
-  slug: string;
-}
+import { SlugObject } from '@/app/types/SlugObject';
 
 type prevNextPostProps = {
   allSlugs: SlugObject[];

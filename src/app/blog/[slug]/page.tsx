@@ -14,7 +14,6 @@ import React from 'react';
 import { eyecatchLocal } from '@/libs/constants';
 import { getPlaiceholder } from 'plaiceholder';
 import { getImageBuffer } from '@/libs/getImageBuffer';
-import { GetStaticPropsContext } from 'next';
 import prevNextPost from '@/libs/prev-next-post';
 import Pagenation from '@/components/Pagenation';
 
@@ -37,16 +36,17 @@ export const generateMetadata = async () => {
   };
 };
 
-export async function getStaticPaths() {
+export const dynamicParams = false;
+export async function generateStaticParams() {
   const allSlugs = await getAllSlugs();
-  return {
-    paths: allSlugs.map(({ slug }) => `/blog/${slug}`),
-    fallback: false,
-  };
+
+  return allSlugs.map(({ slug }) => {
+    return { slug: slug };
+  });
 }
 
-export default async function Post(context: GetStaticPropsContext) {
-  const slug = context.params?.slug;
+export default async function Post({ params }: { params: { slug: string } }) {
+  const slug = params.slug;
 
   if (typeof slug !== 'string') {
     return {
@@ -66,7 +66,6 @@ export default async function Post(context: GetStaticPropsContext) {
     allSlugs,
     currentSlug: slug,
   });
-  console.log('🚀 ~ Post ~ prevPost:', prevPost);
   return (
     <React.Fragment>
       <Container>

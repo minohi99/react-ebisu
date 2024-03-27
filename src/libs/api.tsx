@@ -1,3 +1,4 @@
+import { SlugObject } from '@/app/types/SlugObject';
 import { createClient } from 'microcms-js-sdk';
 
 export const client = createClient({
@@ -17,11 +18,6 @@ export async function getPostBySlug(slug: string) {
     return post.contents[0];
   } catch (err) {}
 }
-
-interface SlugObject {
-  slug: string;
-}
-
 export async function getAllSlugs(limit = 100): Promise<SlugObject[]> {
   try {
     const slugs = await client.get({
