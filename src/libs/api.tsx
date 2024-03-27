@@ -24,7 +24,6 @@ export async function getAllSlugs(limit = 100): Promise<SlugObject[]> {
       endpoint: 'blogs',
       queries: { fields: 'title,slug', orders: '-publishDate', limit: limit },
     });
-    // console.log(slugs.contents);
     return slugs.contents;
   } catch (err) {
     console.log('~~ getAllSlugs ~~');
