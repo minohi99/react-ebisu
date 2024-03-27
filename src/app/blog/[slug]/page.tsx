@@ -5,12 +5,17 @@ import TwoColumn, {
   TwoColumnMain,
   TwoColumnSidebar,
 } from '@/components/TwoColumn';
-import { getPostBySlug } from '@/libs/api';
+import { getAllSlugs, getPostBySlug } from '@/libs/api';
 import Image from 'next/image';
 import ConvertBody from '@/components/ConvertBody';
 import PostCategories from '@/components/PostCategories';
 import extractText from '@/libs/extract-text';
 import React from 'react';
+import { eyecatchLocal } from '@/libs/constants';
+import { getPlaiceholder } from 'plaiceholder';
+import { getImageBuffer } from '@/libs/getImageBuffer';
+import prevNextPost from '@/libs/prev-next-post';
+import Pagenation from '@/components/Pagenation';
 
 export const generateMetadata = async () => {
   const post = await getPostBySlug('schedule');
@@ -31,10 +36,37 @@ export const generateMetadata = async () => {
   };
 };
 
-export default async function Schedule() {
-  const { title, publishDate, eyecatch, content, categories } =
-    await getPostBySlug('schedule');
+export const dynamicParams = false;
+export async function generateStaticParams() {
+  const allSlugs = await getAllSlugs();
+  console.log('🚀 ~ generateStaticParams ~ allSlugs:', allSlugs);
 
+  return allSlugs.map(({ slug }) => {
+    return { slug: slug };
+  });
+}
+
+export default async function Post({ params }: { params: { slug: string } }) {
+  const slug = params.slug;
+
+  if (typeof slug !== 'string') {
+    return {
+      notFound: true,
+    };
+  }
+  const { title, publishDate, eyecatch, content, categories } =
+    await getPostBySlug(slug);
+
+  const currentEyecatch = eyecatch ?? eyecatchLocal;
+  const imageBuffer = await getImageBuffer(currentEyecatch.url);
+  const { base64 } = await getPlaiceholder(imageBuffer);
+  const blurDataURL = base64;
+
+  const allSlugs = await getAllSlugs();
+  const [prevPost, nextPost] = prevNextPost({
+    allSlugs,
+    currentSlug: slug,
+  });
   return (
     <React.Fragment>
       <Container>
@@ -46,12 +78,14 @@ export default async function Schedule() {
           />
 
           <Image
-            src={eyecatch.url}
+            src={currentEyecatch.url}
             alt=""
-            width={eyecatch.width}
-            height={eyecatch.height}
+            width={currentEyecatch.width}
+            height={currentEyecatch.height}
             sizes="(min-width:1152px) 1152px, 100vw"
             priority
+            placeholder="blur"
+            blurDataURL={blurDataURL}
           />
 
           <TwoColumn>
@@ -64,6 +98,12 @@ export default async function Schedule() {
               <PostCategories categories={categories} />
             </TwoColumnSidebar>
           </TwoColumn>
+          <Pagenation
+            prevText={prevPost.title}
+            prevUrl={`/blog/${prevPost.slug}`}
+            nextText={nextPost.title}
+            nextUrl={`/blog/${nextPost.slug}`}
+          />
         </article>
       </Container>
     </React.Fragment>
