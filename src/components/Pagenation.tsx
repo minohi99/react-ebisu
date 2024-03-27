@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 
 type PagenationProps = {
-  prevText: string;
-  prevUrl: string;
+  prevText?: string;
+  prevUrl?: string;
   nextText: string;
   nextUrl: string;
 };
