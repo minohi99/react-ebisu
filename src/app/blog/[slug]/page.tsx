@@ -39,6 +39,7 @@ export const generateMetadata = async () => {
 export const dynamicParams = false;
 export async function generateStaticParams() {
   const allSlugs = await getAllSlugs();
+  console.log('🚀 ~ generateStaticParams ~ allSlugs:', allSlugs);
 
   return allSlugs.map(({ slug }) => {
     return { slug: slug };
