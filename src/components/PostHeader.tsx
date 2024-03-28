@@ -6,7 +6,7 @@ import ConvertDate from './ConvertDate';
 type PostHeader = {
   title: string;
   subtitle: string;
-  publishDate: string;
+  publishDate?: string;
 };
 
 const PostHeader = ({ title, subtitle, publishDate = '' }: PostHeader) => {
