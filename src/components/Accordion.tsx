@@ -18,6 +18,15 @@ const Accordion = ({ heading, children }: AccordionProps) => {
   const toggleText = () => {
     setTextIsOpen((prev) => !prev);
   };
+
+  const textHeightStyle = () => {
+    return {
+      '--text-height': refText.current
+        ? `${refText.current.scrollHeight}px`
+        : '0px',
+    } as React.CSSProperties;
+  };
+
   return (
     <div className={textIsOpen ? styles.open : styles.close}>
       <h3 className={styles.heading}>
@@ -26,13 +35,7 @@ const Accordion = ({ heading, children }: AccordionProps) => {
           <FontAwesomeIcon icon={faCircleChevronDown} className={styles.icon} />
         </button>
       </h3>
-      <div
-        className={styles.text}
-        ref={refText}
-        style={{
-          '--text-height': `${refText.current ? refText.current.scrollHeight + 'px' : '0px'}`,
-        }}
-      >
+      <div className={styles.text} ref={refText} style={textHeightStyle()}>
         <div className={styles.textInner}>{children}</div>
       </div>
     </div>
