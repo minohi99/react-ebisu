@@ -1,4 +1,6 @@
 /* eslint-disable @next/next/no-page-custom-font */
+'use client';
+
 import '@/styles/globals.css';
 import React, { ReactNode } from 'react';
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -10,25 +12,25 @@ config.autoAddCss = false;
 const { siteTitle, siteDesc, siteUrl, siteLang, siteLocale, siteType } =
   siteMeta;
 
-export const metadata = {
-  title: {
-    default: siteTitle,
-    template: `%s | ${siteTitle}`,
-  },
-  description: siteDesc,
-  metadataBase: new URL(siteUrl),
-  alternates: {
-    canonical: '/',
-  },
-  openGraph: {
-    title: siteTitle,
-    description: siteDesc,
-    url: siteUrl,
-    siteName: siteTitle,
-    locale: siteLocale,
-    type: siteType,
-  },
-};
+// export const metadata = {
+//   title: {
+//     default: siteTitle,
+//     template: `%s | ${siteTitle}`,
+//   },
+//   description: siteDesc,
+//   metadataBase: new URL(siteUrl),
+//   alternates: {
+//     canonical: '/',
+//   },
+//   openGraph: {
+//     title: siteTitle,
+//     description: siteDesc,
+//     url: siteUrl,
+//     siteName: siteTitle,
+//     locale: siteLocale,
+//     type: siteType,
+//   },
+// };
 
 type RootLayoutProps = {
   children: ReactNode;

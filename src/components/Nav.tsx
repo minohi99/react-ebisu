@@ -1,18 +1,54 @@
-import Link from "next/link";
-import styles from "@/styles/nav.module.css";
+'use client';
+
+import Link from 'next/link';
+import styles from '@/styles/nav.module.css';
+import { useState } from 'react';
 
 const Nav = () => {
+  const [navIsOpen, setNavIsOpen] = useState(false);
+
+  const toggleNav = () => {
+    setNavIsOpen((prev: boolean) => !prev);
+  };
+
+  const closeNav = () => {
+    setNavIsOpen(false);
+  };
+
   return (
-    <nav>
-      <ul className={styles.list}>
+    <nav className={navIsOpen ? styles.open : styles.close}>
+      {navIsOpen && (
+        <style jsx global>
+          {`
+            @media (max-width: 767px) {
+              body {
+                overflow: hidden;
+                position: fixed;
+                width: 100%;
+              }
+            }
+          `}
+        </style>
+      )}
+      <button className={styles.btn} onClick={toggleNav}>
+        <span className={styles.bar}></span>
+        <span className="sr-only">MENU</span>
+      </button>
+      <ul className={styles.list} onClick={closeNav}>
         <li>
-          <Link href="/">Home</Link>
+          <Link href="/" onClick={closeNav}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link href="/about">About</Link>
+          <Link href="/about" onClick={closeNav}>
+            About
+          </Link>
         </li>
         <li>
-          <Link href="/blog">Blog</Link>
+          <Link href="/blog" onClick={closeNav}>
+            Blog
+          </Link>
         </li>
       </ul>
     </nav>
