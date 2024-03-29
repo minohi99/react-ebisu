@@ -21,7 +21,6 @@ export default async function Category({
 }) {
   const catSlug = params.slug;
   const allCats = await getAllCategories();
-  console.log('🚀 ~ allCats:', allCats);
 
   const cat = allCats.find(({ slug }: { slug: string }) => slug === catSlug);
   const name = cat.name;

@@ -1,3 +1,5 @@
+"use client"
+
 import Logo from "@/components/Logo";
 import Nav from "@/components/Nav";
 import styles from "@/styles/header.module.css";
