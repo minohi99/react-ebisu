@@ -7,13 +7,10 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 const GoogleAnalytics = () => {
   const pathname = usePathname();
-  console.log('🚀 ~ GoogleAnalytics ~ pathname:', pathname);
   const searchParams = useSearchParams();
-  console.log('🚀 ~ GoogleAnalytics ~ searchParams:', searchParams);
 
   useEffect(() => {
     const url = pathname + searchParams.toString();
-    console.log('🚀 ~ useEffect ~ url:', url);
     gtag.pageview(url);
   }, [pathname, searchParams]);
 
