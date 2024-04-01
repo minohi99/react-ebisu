@@ -5,6 +5,7 @@ export const siteMeta = {
   siteLang: 'ja',
   siteLocale: 'ja_JP',
   siteType: 'website',
+  siteIcon: '/favicon.png',
 };
 
 export const eyecatchLocal = {
