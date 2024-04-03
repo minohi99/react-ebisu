@@ -20,10 +20,6 @@ export const baseMetadata = {
     default: siteTitle,
   },
   description: siteDesc,
-  icons: {
-    icon: siteIcon,
-    apple: siteIcon,
-  },
 };
 
 export const openGraphMetadata = {
