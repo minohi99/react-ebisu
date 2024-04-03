@@ -1,38 +1,29 @@
 /* eslint-disable @next/next/no-page-custom-font */
-'use client';
 
 import '@/styles/globals.css';
 import React, { ReactNode, Suspense } from 'react';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
-import { siteMeta } from '@/libs/constants';
 import Layout from '@/components/Layout';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import {
+  baseMetadata,
+  openGraphMetadata,
+  twitterMetadata,
+} from '@/libs/baseMetadata';
+import { siteMeta } from '@/libs/constants';
 
 config.autoAddCss = false;
 
-const { siteTitle, siteDesc, siteUrl, siteLang, siteLocale, siteType } =
-  siteMeta;
-
-// export const metadata = {
-//   title: {
-//     default: siteTitle,
-//     template: `%s | ${siteTitle}`,
-//   },
-//   description: siteDesc,
-//   metadataBase: new URL(siteUrl),
-//   alternates: {
-//     canonical: '/',
-//   },
-//   openGraph: {
-//     title: siteTitle,
-//     description: siteDesc,
-//     url: siteUrl,
-//     siteName: siteTitle,
-//     locale: siteLocale,
-//     type: siteType,
-//   },
-// };
+export const metadata = {
+  ...baseMetadata,
+  openGraph: {
+    ...openGraphMetadata,
+  },
+  twitter: {
+    ...twitterMetadata,
+  },
+};
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -41,7 +32,7 @@ type RootLayoutProps = {
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <React.Fragment>
-      <html lang={siteLang}>
+      <html lang={siteMeta.siteLang}>
         <body>
           <Suspense>
             <GoogleAnalytics />

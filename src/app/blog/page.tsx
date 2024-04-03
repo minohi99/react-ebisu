@@ -7,12 +7,30 @@ import { eyecatchLocal } from '@/libs/constants';
 import { getPlaiceholder } from 'plaiceholder';
 import { getImageBuffer } from '@/libs/getImageBuffer';
 
+import { siteMeta } from '@/libs/constants';
+import { openGraphMetadata, twitterMetadata } from '@/libs/baseMetadata';
+
+const { siteTitle, siteUrl } = siteMeta;
+
+const pageTitle = 'ブログ';
+const pageDesc = 'ブログの記事一覧';
+const ogpTitle = `${pageTitle} | ${siteTitle}`;
+const ogpUrl = new URL('/about', siteUrl).toString();
+
 export const metadata = {
-  title: 'ブログの記事一覧',
-  description: 'ブログの記事一覧',
+  title: pageTitle,
+  description: pageDesc,
+
   openGraph: {
-    title: 'ブログの記事一覧',
-    description: 'ブログの記事一覧',
+    ...openGraphMetadata,
+    title: ogpTitle,
+    description: pageDesc,
+    url: ogpUrl,
+  },
+  twitter: {
+    ...twitterMetadata,
+    title: ogpTitle,
+    description: pageDesc,
   },
 };
 

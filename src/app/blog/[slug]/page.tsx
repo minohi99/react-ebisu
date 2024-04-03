@@ -17,23 +17,51 @@ import { getImageBuffer } from '@/libs/getImageBuffer';
 import prevNextPost from '@/libs/prev-next-post';
 import Pagenation from '@/components/Pagenation';
 
-export const generateMetadata = async () => {
-  const post = await getPostBySlug('schedule');
-  const description = extractText(post.content);
+import { siteMeta } from '@/libs/constants';
+const { siteTitle, siteUrl } = siteMeta;
 
-  return {
-    title: post.title,
-    description: description,
-    alternates: {
-      canonical: post.siteUrl,
-    },
+import { openGraphMetadata, twitterMetadata } from '@/libs/baseMetadata';
+
+type ParamsProps = {
+  slug: string;
+};
+
+export const generateMetadata = async ({ params }: { params: ParamsProps }) => {
+  const slug = params.slug;
+  const post = await getPostBySlug(slug);
+  const { title: pageTitle, publishDate: publish, content, categories } = post;
+
+  const pageDesc = extractText(post.content);
+  const eyecatch = post.eyecatch ?? eyecatchLocal;
+
+  const ogpTitle = `${pageTitle} | ${siteTitle}`;
+  const ogpUrl = new URL(`/blog/${slug}`, siteUrl).toString();
+
+  const metadata = {
+    title: pageTitle,
+    description: pageDesc,
     openGraph: {
-      title: post.title,
-      description: description,
-      url: post.siteUrl,
-      type: 'article',
+      ...openGraphMetadata,
+      title: ogpTitle,
+      description: pageDesc,
+      url: ogpUrl,
+      images: [
+        {
+          url: eyecatch.url,
+          width: eyecatch.width,
+          height: eyecatch.height,
+        },
+      ],
+    },
+    twitter: {
+      ...twitterMetadata,
+      title: ogpTitle,
+      description: pageDesc,
+      images: [eyecatch.url],
     },
   };
+
+  return metadata;
 };
 
 export const dynamicParams = false;
@@ -45,7 +73,7 @@ export async function generateStaticParams() {
   });
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
+export default async function Post({ params }: { params: ParamsProps }) {
   const slug = params.slug;
 
   if (typeof slug !== 'string') {

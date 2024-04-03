@@ -6,23 +6,59 @@ import { eyecatchLocal } from '@/libs/constants';
 import { getPlaiceholder } from 'plaiceholder';
 import { getImageBuffer } from '@/libs/getImageBuffer';
 
+import { siteMeta } from '@/libs/constants';
+const { siteTitle, siteUrl } = siteMeta;
+
+import { openGraphMetadata, twitterMetadata } from '@/libs/baseMetadata';
+
+type ParamsProps = {
+  slug: string;
+};
+
+export async function generateMetadata({ params }: { params: ParamsProps }) {
+  const catSlug = params.slug;
+
+  const allCats = await getAllCategories();
+  const cat = allCats.find(({ slug }: { slug: string }) => slug === catSlug);
+
+  const pageTitle = cat.name;
+  const pageDesc = `${pageTitle}に関する記事`;
+  const ogpTitle = `${pageTitle} | ${siteTitle}`;
+  const ogpUrl = new URL(`/blog/category/${catSlug}`, siteUrl).toString();
+
+  const metadata = {
+    title: pageTitle,
+    description: pageDesc,
+
+    openGraph: {
+      ...openGraphMetadata,
+      title: ogpTitle,
+      description: pageDesc,
+      url: ogpUrl,
+    },
+    twitter: {
+      ...twitterMetadata,
+      title: ogpTitle,
+      description: pageDesc,
+    },
+  };
+
+  return metadata;
+}
+
 export const dynamicParams = false;
 export async function generateStaticParams() {
   const allCats = await getAllCategories();
-  return allCats.map(({ slug }: { slug: string }) => {
+  return allCats.map(({ slug }: ParamsProps) => {
     return { slug: slug };
   });
 }
 
-export default async function Category({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function Category({ params }: { params: ParamsProps }) {
   const catSlug = params.slug;
   const allCats = await getAllCategories();
 
-  const cat = allCats.find(({ slug }: { slug: string }) => slug === catSlug);
+  const cat = allCats.find(({ slug }: ParamsProps) => slug === catSlug);
   const name = cat.name;
 
   const posts = await getAllPostsByCategory(cat.id);

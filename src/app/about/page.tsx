@@ -11,18 +11,41 @@ import EyeCatch from '@/images/about.jpg';
 import Link from 'next/link';
 import React from 'react';
 import Accordion from '@/components/Accordion';
+import { siteMeta } from '@/libs/constants';
+import { openGraphMetadata, twitterMetadata } from '@/libs/baseMetadata';
+
+const { siteTitle, siteUrl } = siteMeta;
+
+const pageTitle = 'アバウト';
+const pageDesc = 'About development activities';
+const ogpTitle = `${pageTitle} | ${siteTitle}`;
+const ogpUrl = new URL('/about', siteUrl).toString();
 
 export const metadata = {
-  title: 'アバウト',
-  description: 'About development activities',
+  title: pageTitle,
+  description: pageDesc,
+
   openGraph: {
-    title: 'アバウト',
-    description: 'About development activities',
-  },
-  alternates: {
-    canonical: '/about',
+    ...openGraphMetadata,
+    title: ogpTitle,
+    description: pageDesc,
+    url: ogpUrl,
+    images: [
+      {
+        url: EyeCatch.src,
+        width: EyeCatch.width,
+        height: EyeCatch.height,
+      },
+    ],
+    twitter: {
+      ...twitterMetadata,
+      title: ogpTitle,
+      description: pageDesc,
+      images: [EyeCatch.src],
+    },
   },
 };
+
 const About = () => {
   return (
     <React.Fragment>
