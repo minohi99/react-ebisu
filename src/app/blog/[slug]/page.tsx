@@ -29,7 +29,7 @@ type ParamsProps = {
 export const generateMetadata = async ({ params }: { params: ParamsProps }) => {
   const slug = params.slug;
   const post = await getPostBySlug(slug);
-  const { title: pageTitle, publishDate: publish, content, categories } = post;
+  const { title: pageTitle } = post;
 
   const pageDesc = extractText(post.content);
   const eyecatch = post.eyecatch ?? eyecatchLocal;
