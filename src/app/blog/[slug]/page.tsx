@@ -22,7 +22,11 @@ const { siteTitle, siteUrl } = siteMeta;
 
 import { openGraphMetadata, twitterMetadata } from '@/libs/baseMetadata';
 
-export const generateMetadata = async ({ params }) => {
+type ParamsProps = {
+  slug: string;
+};
+
+export const generateMetadata = async ({ params }: { params: ParamsProps }) => {
   const slug = params.slug;
   const post = await getPostBySlug(slug);
   const { title: pageTitle, publishDate: publish, content, categories } = post;
@@ -69,7 +73,7 @@ export async function generateStaticParams() {
   });
 }
 
-export default async function Post({ params }: { params: { slug: string } }) {
+export default async function Post({ params }: { params: ParamsProps }) {
   const slug = params.slug;
 
   if (typeof slug !== 'string') {

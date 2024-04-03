@@ -11,11 +11,15 @@ const { siteTitle, siteUrl } = siteMeta;
 
 import { openGraphMetadata, twitterMetadata } from '@/libs/baseMetadata';
 
-export async function generateMetadata({ params }) {
+type ParamsProps = {
+  slug: string;
+};
+
+export async function generateMetadata({ params }: { params: ParamsProps }) {
   const catSlug = params.slug;
 
   const allCats = await getAllCategories();
-  const cat = allCats.find(({ slug }) => slug === catSlug);
+  const cat = allCats.find(({ slug }: { slug: string }) => slug === catSlug);
 
   const pageTitle = cat.name;
   const pageDesc = `${pageTitle}に関する記事`;
@@ -45,20 +49,16 @@ export async function generateMetadata({ params }) {
 export const dynamicParams = false;
 export async function generateStaticParams() {
   const allCats = await getAllCategories();
-  return allCats.map(({ slug }: { slug: string }) => {
+  return allCats.map(({ slug }: ParamsProps) => {
     return { slug: slug };
   });
 }
 
-export default async function Category({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default async function Category({ params }: { params: ParamsProps }) {
   const catSlug = params.slug;
   const allCats = await getAllCategories();
 
-  const cat = allCats.find(({ slug }: { slug: string }) => slug === catSlug);
+  const cat = allCats.find(({ slug }: ParamsProps) => slug === catSlug);
   const name = cat.name;
 
   const posts = await getAllPostsByCategory(cat.id);
